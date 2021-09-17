@@ -13,15 +13,13 @@
 }
 
 .stats {
-  border-radius: 13px;
-  box-shadow: 0 5px 8px 5px #000;
+  background-image: url(./assets/golf-pic.jpeg);
+  background-position: center;
+  background-size: cover;
+  height: 300px;
 }
 
-.mOpacity {
-  background-color: rgb(43, 43, 43);
-  opacity: .9;
-  color: white;
-}
+
 
 .navbar {
   display: flex;
@@ -33,5 +31,4 @@
   border-bottom: solid 1px var(--primary-color);
   opacity: 0.9;
   height: 75px;
-  margin-bottom: 1rem;
 }
