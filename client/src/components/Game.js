@@ -6,8 +6,8 @@ const Game = () => {
     let holeCount = 1;
     return (
         <Container className="w-100 d-flex flex-column align-items-center p-0" style={{ height: '100vh'}}>
-            <Container className='d-flex justify-content-center bg-secondary w-100'>
-                <div className='d-flex justify-content-center mx-auto'>
+            <Container className='d-flex justify-content-center bg-secondary w-100 '>
+                <div className='d-flex justify-content-center'>
                     <ul className='mx-auto'>
                         <li className='mx-auto'>player1Id</li>
                         <li className='mx-auto'>player2Id</li>
