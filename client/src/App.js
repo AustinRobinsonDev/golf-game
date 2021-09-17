@@ -3,23 +3,19 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './components/Login';
 import Game from './components/Game';
-import { Container, Row, Navbar } from 'react-bootstrap';
+import { Container} from 'react-bootstrap';
+import MainNavbar from './components/MainNavbar'
 
 
 function App() {
   const [id, setId] = useState();
   return (
-    <div className='app'>
-    <Navbar expand="lg" variant="light" bg="light">
-  <Container>
-    <Navbar.Brand href="#">Golf, Uht!</Navbar.Brand>
-  </Container>
-</Navbar>
-    {/* <Navbar /> */}
+    <Container className='app w-100'>
+    <MainNavbar />
     {id}
     {/* <Login onIdSubmit={setId}/> */}
     <Game />
-    </div>
+    </Container>
   );
 }
 

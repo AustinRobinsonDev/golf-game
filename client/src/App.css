@@ -3,8 +3,6 @@
   padding: 0;
 }
 
-
-
 .app{
   background-color: hsl(120, 26%, 42%);
   background-size: cover;
@@ -19,8 +17,6 @@
   height: 300px;
 }
 
-
-
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -31,4 +27,13 @@
   border-bottom: solid 1px var(--primary-color);
   opacity: 0.9;
   height: 75px;
+}
+
+.text-large {
+  font-size: 24px;
+}
+
+.challengeDiv{
+  min-height: 200px;
+  background-color: white;
 }
