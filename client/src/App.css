@@ -1,0 +1,24 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+
+
+.app{
+  background-color: hsl(120, 26%, 42%);
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+}
+
+.stats {
+  border-radius: 13px;
+  box-shadow: 0 5px 8px 5px #000;
+}
+
+.mOpacity {
+  background-color: rgb(43, 43, 43);
+  opacity: .9;
+  color: white;
+}
