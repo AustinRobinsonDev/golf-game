@@ -6,16 +6,23 @@ import Game from './components/Game';
 import Footer from './components/Footer';
 import MainNavbar from './components/MainNavbar';
 import { useLocalStorage } from './custom-hooks/useLocalStorage';
+import { PlayersContext, PlayersProvider } from './context/PlayersProvider';
 
 
 function App() {
   const [id, setId] = useLocalStorage();
+
+  const game = (
+    <PlayersProvider>
+
+      <Game id={id} />
+    </PlayersProvider>
+  )
   return (
     <div className='app w-100'>
     <MainNavbar />
-    {id}
-    <Login onIdSubmit={setId}/>
-    {/* <Game /> */}
+
+      id ? game : <Login onIdSubmit={setId}/>;
     <Footer />
     </div>
   );

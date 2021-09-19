@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 import { Container, Form, Button, FloatingLabel } from 'react-bootstrap';
 import { FaArrowRight } from 'react-icons/fa';
 
-const Game = () => {
+const Game = ({ id }) => {
     let holeCount = 6;
     const challenges = [
         "This is 1 text for a challenge, keep reading almost done, okay that will be all",
@@ -16,6 +16,7 @@ const Game = () => {
         <Container className="game-wrapper w-100 d-flex flex-column align-items-center p-0" style={{ height: '100vh', maxWidth: '500px'}}>
                 
                 <Container className='w-100 d-flex m-0 flex-column align-items-center justify-content-center stats'>
+                <p>{id}</p>
                 <h1 className='text-center text-white text-shadow mb-5'>Pell City Country Club</h1>
                     <div className='z-index-0 d-flex m-0 flex-column align-items-center pt-4 stats-border'>
                         <h1 className='l-s mb-3 text-white'>Hole {holeCount}</h1>
