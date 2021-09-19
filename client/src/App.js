@@ -3,8 +3,8 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './components/Login';
 import Game from './components/Game';
-import { Container} from 'react-bootstrap';
-import MainNavbar from './components/MainNavbar'
+import Footer from './components/Footer';
+import MainNavbar from './components/MainNavbar';
 
 
 function App() {
@@ -15,6 +15,7 @@ function App() {
     {id}
     {/* <Login onIdSubmit={setId}/> */}
     <Game />
+    <Footer />
     </div>
   );
 }

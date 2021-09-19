@@ -4,7 +4,7 @@
 }
 
 .app{
-  background-color: hsl(120, 26%, 42%);
+  background-color: #4f874f;
   background-size: cover;
   margin: 0;
   padding: 0;
@@ -16,6 +16,10 @@
   background-position: center;
   background-size: cover;
   height: 300px;
+}
+
+.ul{
+  text-decoration: underline;
 }
 
 .navbar {
@@ -37,4 +41,37 @@
 .challengeDiv{
   min-height: 200px;
   background-color: white;
+}
+
+.text-white {
+  color: #fff;
+}
+
+.stats-border {
+  border: 3px solid hsl(118, 34%, 51%);
+  padding: 25px;
+  width: 214px;
+  box-shadow: 0 3px 6px 3px #000;
+}
+
+.bottom-form-container{
+  min-height: 100px;
+  margin: 0;
+}
+
+.score-input {
+  background-color: hsla(0, 14%, 49%, 0.712);
+}
+
+.l-s{
+  letter-spacing: 3px;
+}
+
+.m-footer {
+  color: black;
+  margin: 0 20px;
+}
+
+.footer-container{
+  padding-bottom: 50px;
 }
