@@ -2,9 +2,8 @@ import React, {useRef} from 'react';
 import { Container, Form, Button, FloatingLabel } from 'react-bootstrap';
 import { FaArrowRight } from 'react-icons/fa';
 
-
 const Game = () => {
-    let holeCount = 1;
+    let holeCount = 6;
     const challenges = [
         "This is 1 text for a challenge, keep reading almost done, okay that will be all",
         "This is 2 text for a challenge, keep reading almost done, okay that will be all",
@@ -15,15 +14,17 @@ const Game = () => {
     }
     return (
         <Container className="game-wrapper w-100 d-flex flex-column align-items-center p-0" style={{ height: '100vh', maxWidth: '500px'}}>
+                
                 <Container className='w-100 d-flex m-0 flex-column align-items-center justify-content-center stats'>
-                    <div className='d-flex m-0 flex-column align-items-center pt-4 stats-border'>
+                <h1 className='text-center text-white text-shadow mb-5'>Pell City Country Club</h1>
+                    <div className='z-index-0 d-flex m-0 flex-column align-items-center pt-4 stats-border'>
                         <h1 className='l-s mb-3 text-white'>Hole {holeCount}</h1>
-                        <h4 className='l-s mb-3' style={{color: 'white'}}>Length: 475</h4>
+                        <h4 className='l-s mb-3' style={{color: 'white'}}>Length: 492</h4>
                         <h4 className='l-s text-warning'>Par: 5</h4>
                     </div>
                 </Container>
                 <div className='challengeDiv flex-column d-flex px-3 mx-auto w-100 align-items-center justify-content-center'>
-                <h1 className='ul'>Challenge:</h1>
+                    <h1 className='ul'>Challenge:</h1>
                     <p className='text-center text-large'>{challenges[2]}</p>
                 </div>
                 <div className='w-100 bottom-form-container border-top-0'>
@@ -36,7 +37,6 @@ const Game = () => {
                     </Form>
                 </div>
         </Container>
-
     )
 }
 

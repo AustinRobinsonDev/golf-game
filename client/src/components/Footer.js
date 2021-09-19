@@ -3,8 +3,8 @@ import {Nav} from 'react-bootstrap';
 
 const Footer = () => {
     return (
-        <div className='w-100 d-flex justify-content-center footer-container'>
-            <Nav defaultActiveKey="/home" as="ul">
+        <div style={{marginTop: '-50px'}} className='w-100 d-flex justify-content-center footer-container'>
+            <Nav defaultActiveKey="/home" as="ul" fixed='bottom'>
                 <Nav.Item as="li">
                     <Nav.Link bsPrefix='m-footer' href="/home">Active</Nav.Link>
                 </Nav.Item>

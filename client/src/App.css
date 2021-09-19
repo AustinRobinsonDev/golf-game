@@ -51,7 +51,9 @@
   border: 3px solid hsl(118, 34%, 51%);
   padding: 25px;
   width: 214px;
+  border-radius: 2px;
   box-shadow: 0 3px 6px 3px #000;
+  backdrop-filter: blur(3px);
 }
 
 .bottom-form-container{
@@ -74,4 +76,8 @@
 
 .footer-container{
   padding-bottom: 50px;
+}
+
+.text-shadow {
+  text-shadow: 1px 1px 2px rgb(0, 0, 0), 0 0 1em rgb(41, 119, 67), 0 0 0.2em rgb(75, 75, 75);
 }
