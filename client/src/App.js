@@ -5,16 +5,17 @@ import Login from './components/Login';
 import Game from './components/Game';
 import Footer from './components/Footer';
 import MainNavbar from './components/MainNavbar';
+import { useLocalStorage } from './custom-hooks/useLocalStorage';
 
 
 function App() {
-  const [id, setId] = useState();
+  const [id, setId] = useLocalStorage();
   return (
     <div className='app w-100'>
     <MainNavbar />
     {id}
-    {/* <Login onIdSubmit={setId}/> */}
-    <Game />
+    <Login onIdSubmit={setId}/>
+    {/* <Game /> */}
     <Footer />
     </div>
   );
