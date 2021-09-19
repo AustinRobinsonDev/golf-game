@@ -10,12 +10,12 @@ import MainNavbar from './components/MainNavbar'
 function App() {
   const [id, setId] = useState();
   return (
-    <Container className='app w-100'>
+    <div className='app w-100'>
     <MainNavbar />
     {id}
     {/* <Login onIdSubmit={setId}/> */}
     <Game />
-    </Container>
+    </div>
   );
 }
 
