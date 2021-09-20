@@ -1,12 +1,18 @@
+const express = require('express');
+const http = require('http');
+const app = express();
+const server = http.createServer(app);
+const socket = require('socket.io')
+const io = socket(server);
 
-const io = require('socket.io')(5000, {
-    cors: {
-        origin: ["http://localhost:3000"],
+server.listen(5000, () => console.log('server running on port 5000'))
+// (5000, {
+//     cors: {
+//         origin: ["http://localhost:3000"],
         
-    }
-});
-var nsp = io.of('/my-namespace');
-nps.on('connection', socket => {
+//     }
+// });
+io.on('connection', socket => {
     const id = socket.handshake.query.id
     socket.join(id)
 
@@ -15,7 +21,3 @@ nps.on('connection', socket => {
     })
 })
 
-// io.clients()(error, clients) => {
-//     if (error) throw error;
-//     console.log(clients);
-// });

@@ -11,8 +11,8 @@ const Login = ({ onIdSubmit, id}) => {
         onIdSubmit(idRef.current.value)
     }
     const handleClick = (e) => {
-        // onIdSubmit(idRef.current.value)
-        //socket.emit('join-room');
+        onIdSubmit(idRef.current.value)
+        socket.emit('join-room');
 
     }
     return (
