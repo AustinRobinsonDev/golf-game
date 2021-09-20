@@ -13,6 +13,9 @@ import { SocketProvider } from './context/SocketProvider';
 function App() {
   const [id, setId] = useLocalStorage();
 
+//   window.onbeforeunload = function() {
+//     localStorage.clear();
+//  }
   const game = (
     <SocketProvider id={id}>
       <PlayersProvider id={id}>
@@ -20,10 +23,18 @@ function App() {
       </PlayersProvider>
     </SocketProvider>
   )
+
+  const login = (
+    <SocketProvider id={id}>
+      <PlayersProvider id={id}>
+        <Login id={id} onIdSubmit={setId}/>
+      </PlayersProvider>
+    </SocketProvider>
+  )
   return (
     <div className='app w-100'>
     <MainNavbar />
-      {id ? game : <Login onIdSubmit={setId}/>}
+      {id ? game : login}
     <Footer />
     </div>
   );

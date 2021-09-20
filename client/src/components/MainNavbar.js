@@ -5,7 +5,7 @@ import { FaGolfBall } from 'react-icons/fa';
 
 const MainNavbar = () => {
     return (
-  <Navbar bg="light" expand="lg" className='d-flex align-items-center'>
+  <Navbar bg="light" style={{height:'55px'}} expand="lg" className='d-flex p-0 align-items-center'>
     <Container className='d-flex align-items-center'>
       <Navbar.Brand style={{color: 'black'}} href="#">Golf Game<FaGolfBall className='text-warning' style={{fontSize: '25px'}} /></Navbar.Brand>
       <Navbar.Toggle aria-controls=" basic-navbar-nav" />

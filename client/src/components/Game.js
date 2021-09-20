@@ -8,8 +8,14 @@ const Game = ({ id }) => {
     const [roundPoints, setRoundPoints] = useState('4');
     const [playerScore, setPlayerScore] = useState(0);
     const [holeCounter, setHoleCounter] = useState(holeCount);
+    const [rndm, setRndm] = useState(0);
+
     
     const course = useCourse();
+
+    function randomNumber(min, max) { 
+        return Math.floor(Math.random() * (max - min) + min);
+    } 
 
     const onChange = e => {
         e.preventDefault();
@@ -18,6 +24,7 @@ const Game = ({ id }) => {
 
     const handleSubmit = e => {
         e.preventDefault();
+        setRndm(randomNumber(1,6))
         if (holeCounter <= 8) {
             setPlayerScore(parseInt(roundPoints) + playerScore);
             setHoleCounter(holeCounter + 1);
@@ -38,8 +45,8 @@ const Game = ({ id }) => {
                     </div>
                 </Container>
                 <div className='challengeDiv flex-column d-flex px-3 mx-auto w-100 align-items-center justify-content-center'>
-                    <h1 className='ul'>Challenge:</h1>
-                    <p className='text-center text-large'></p>
+                    <h1 className='ul'>Challenge: </h1>
+                    <p className='text-center text-large'>{course.rules[rndm]}</p>
                 </div>
                 <div className='w-100 bottom-form-container border-top-0'>
                     <Form onSubmit={handleSubmit} className='w-100'>
