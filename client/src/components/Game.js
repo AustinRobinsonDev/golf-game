@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect} from 'react';
 import { Container, Form, Button, FloatingLabel } from 'react-bootstrap';
 import { FaArrowRight } from 'react-icons/fa';
 
@@ -7,13 +7,18 @@ const Game = (props) => {
     function renderUsers (user) {
         if(user.id === props.yourId) {
             return (
-                <p key={user.id} >You: {user.username}</p>
+                <p className='d-flex align-items-center pt-2' key={user.id}>You:{user.username}</p>
+                
             )
         }
         return (
-            <p key={user.id} >{user.username}</p>
+            <p className='d-flex align-items-center pt-2' key={user.id}>{user.username}</p>
         )
     }
+    // useEffect((user) => {
+    //     renderUsers()
+    // },[props.roundPoints])
+
     return (
         <Container className="game-wrapper w-100 d-flex flex-column align-items-center p-0" style={{ height: '100vh', maxWidth: '500px'}}>
                 <Container className='w-100 d-flex m-0 flex-column align-items-center justify-content-center stats'>
@@ -27,7 +32,8 @@ const Game = (props) => {
                     </div>
                 </Container>
                 <div className='challengeDiv flex-column d-flex px-3 mx-auto w-100 align-items-center justify-content-center'>
-                    <div className='d-flex w-100 justify-content-around'>Players: {props.allUsers.map(renderUsers)}</div>
+                    <div className='players d-flex w-100 align-items-center justify-content-around'><h3>Players:</h3>{props.allUsers ? props.allUsers.map(renderUsers) : ''}</div>
+                    
                     <h1 className='ul'>Challenge: </h1>
                     <p className='text-center text-large'>{props.course.rules[props.random]}</p>
                 </div>
@@ -36,7 +42,7 @@ const Game = (props) => {
                         <Form.Group className='bottom-form-container border-top-0 d-flex align-items-center w-100 justify-content-center'>
                         <Form.Label style={{fontSize: '24px', color: 'black'}} className='flex-grow-3'>Score:</Form.Label>
                         <Form.Control name='roundPoints' placeholder='4' onChange={props.onScoreChange} value={props.roundPoints} style={{backgroundColor: 'hsla(0, 14%, 49%, 0.712)', marginLeft: '20px', maxWidth: '40px'}} className='px-3 mr-2 w-25 score-input' type='text' required />
-                        <Button style={{marginLeft: '20px'}} className='mb-2 btn-warning' onClick={(props.nextHole)} >Next Hole <FaArrowRight /></Button>
+                        <Button style={{marginLeft: '20px'}} className='mb-2 btn-warning' onClick={props.nextHole} >Next Hole <FaArrowRight /></Button>
                         </Form.Group>
                     </Form>
                 </div>
