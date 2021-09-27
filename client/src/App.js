@@ -10,7 +10,7 @@ import immer from 'immer';
 import useLocalStorage from './custom-hooks/useLocalStorage';
 
 function App() {
-
+  // All app level state
   const [course, setCourse] = useState({
     name: 'Pell City Country Club',
     par: 36,
@@ -20,7 +20,6 @@ function App() {
     rules: ['Every player must tee-off from a beer can', 'Only drivers and putters on this hole, you may re-tee after first shot',   'Each player must Billy Madison their tee shot', 'Every player is free to distract the person teeing off', 'Every player use the womens tee-box and throw the ball as far as possible for stroke #1', 'Everyone uses their driver to putt on this hole']
   });
   const [username, setUsername] = useState('');
-  const [messages, setMessages] = useState([])
   const [connected, setConnected] = useState(false);
   const [currentGame, setCurrentGame] = useState({ chatName: 'general'});
   const [connectedRooms, setConnectedRooms] = useState('general');
@@ -34,25 +33,24 @@ function App() {
   const [socket, setSocket] = useState()
   const [id, setId] = useLocalStorage('yourId');
   const socketRef = useRef();
-  let sum = 0;
 
+  // All app level functions and socket connections 
   function nextHole (e) {
-    socket.emit('next hole', roundPoints, username)
+    socket.emit('next hole', roundPoints, username);
     if (holeCounter <= course.length) {
       if (playerScores[0] === 0) {
         setCurrentScore(roundPoints)
         setPlayerScores([parseInt(roundPoints)]);
       } else{
         setPlayerScores([...playerScores, parseInt(roundPoints)]);
-        setCurrentScore(parseInt(currentScore) + parseInt(roundPoints))
+        setCurrentScore(parseInt(currentScore) + parseInt(roundPoints));
       }
       setRoundPoints(''); 
       setHoleCounter(holeCounter + 1);
       randomNumber(1, 6);
     }
-      
-      updateUserScores(username)
-      console.log(allUsers)
+      updateUserScores(username);
+      console.log(allUsers);
   }
 
   function updateUserScores (username) {
@@ -61,10 +59,8 @@ function App() {
       if(newUserList[i].username === username) {
         return newUserList[i].score = [...allUsers, parseInt(roundPoints)];
       }
-      
     }
     setAllUsers(newUserList);
-
   }
 
   function randomNumber (min, max) { 
@@ -74,7 +70,7 @@ function App() {
   } 
 
   function handleScoreChange (e) {
-    setPlayerScores(() => playerScores.push(parseInt(roundPoints)))
+    setPlayerScores(() => playerScores.push(parseInt(roundPoints)));
   }
 
   function handleChange (e) {
@@ -83,14 +79,6 @@ function App() {
 
   function onScoreChange (e) {
     setRoundPoints(e.target.value);
-  }
-
-  function toggleChat (currentGame) {
-    if(!messages[currentGame.chatName]) {
-      const newMessages = immer(messages, draft => {
-        draft[currentGame.chatName] = [];
-      })
-    }
   }
 
   function joinRoom (room) {
@@ -102,7 +90,6 @@ function App() {
   }
 
   function connect () {
-
     setConnected(true);
     socket.current = io.connect("/");
     socket.current.emit('connection');
@@ -112,10 +99,10 @@ function App() {
       setAllUsers(allUsers);
     });
     socket.current.on('next hole', allUsers => {
-      setAllUsers(allUsers)
+      setAllUsers(allUsers);
     });
-    setRoundPoints('')
-    setCurrentScore(0)
+    setRoundPoints('');
+    setCurrentScore(0);
     randomNumber(1,6);
   }
   useEffect(() => {
@@ -126,7 +113,7 @@ function App() {
     setSocket(newSocket)
 
     return () => newSocket.close()
-  }, [id])
+  }, [id]);
 
   const game = (
         <Game
