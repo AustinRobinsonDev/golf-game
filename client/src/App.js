@@ -19,14 +19,12 @@ function App() {
     holeLength: [350, 515, 135, 340, 165, 492, 426, 376, 358 ],
     rules: ['Every player must tee-off from a beer can', 'Only drivers and putters on this hole, you may re-tee after first shot',   'Each player must Billy Madison their tee shot', 'Every player is free to distract the person teeing off', 'Every player use the womens tee-box and throw the ball as far as possible for stroke #1', 'Everyone uses their driver to putt on this hole']
   });
-
   const [username, setUsername] = useState('');
   const [messages, setMessages] = useState([])
   const [connected, setConnected] = useState(false);
   const [currentGame, setCurrentGame] = useState({ chatName: 'general'});
   const [connectedRooms, setConnectedRooms] = useState('general');
   const [allUsers, setAllUsers] = useState([]);
-  const [inGame, setInGame] = useState([allUsers]);
   const [playerScores, setPlayerScores] = useState([]);
   const [roundPoints, setRoundPoints] = useState(0);
   const [currentScore, setCurrentScore] = useState();
@@ -40,7 +38,7 @@ function App() {
 
   function nextHole (e) {
     socket.emit('next hole', roundPoints, username)
-    if (holeCounter <= 9) {
+    if (holeCounter <= course.length) {
       if (playerScores[0] === 0) {
         setCurrentScore(roundPoints)
         setPlayerScores([parseInt(roundPoints)]);
@@ -52,15 +50,21 @@ function App() {
       setHoleCounter(holeCounter + 1);
       randomNumber(1, 6);
     }
-      if(allUsers !== undefined) {
-        setAllUsers(() => {
-          allUsers.forEach(p => {
-            if(p.username === username)
-            p.score.push(parseInt(roundPoints));
-          })
-        })
-      }
+      
+      updateUserScores(username)
       console.log(allUsers)
+  }
+
+  function updateUserScores (username) {
+    let newUserList = [...allUsers];
+    for( let i = 0; i < newUserList.length; i++) {
+      if(newUserList[i].username === username) {
+        return newUserList[i].score = [...allUsers, parseInt(roundPoints)];
+      }
+      
+    }
+    setAllUsers(newUserList);
+
   }
 
   function randomNumber (min, max) { 
@@ -70,7 +74,7 @@ function App() {
   } 
 
   function handleScoreChange (e) {
-    setPlayerScores(() => playerScores.push(roundPoints))
+    setPlayerScores(() => playerScores.push(parseInt(roundPoints)))
   }
 
   function handleChange (e) {
@@ -81,7 +85,7 @@ function App() {
     setRoundPoints(e.target.value);
   }
 
-  function toggleChat(currentGame) {
+  function toggleChat (currentGame) {
     if(!messages[currentGame.chatName]) {
       const newMessages = immer(messages, draft => {
         draft[currentGame.chatName] = [];
@@ -89,33 +93,27 @@ function App() {
     }
   }
 
-  function roomJoinCallBack (incomingMessages, room) {
-    const newMessages = immer(messages, draft => {
-      draft[room] = incomingMessages;
-    })
-    setMessages(newMessages)
-  }
-
-  function joinRoom(room) {
+  function joinRoom (room) {
     const newConnectedRooms = immer(connectedRooms, draft => {
       draft.push(room);
     })
-    socket.emit('join room', room => roomJoinCallBack(room));
+    socket.emit('join room', room);
     setConnectedRooms(newConnectedRooms);
-    setInGame([allUsers])
   }
 
-  function connect(){
+  function connect () {
 
     setConnected(true);
     socket.current = io.connect("/");
-    // io.emit('connection', socket)
+    socket.current.emit('connection');
     socket.current.emit('join server', username);
     socket.current.emit('join room', "general", allUsers);
     socket.current.on('new user', allUsers => {
+      setAllUsers(allUsers);
+    });
+    socket.current.on('next hole', allUsers => {
       setAllUsers(allUsers)
     });
-    socket.current.on('next hole', roundPoints);
     setRoundPoints('')
     setCurrentScore(0)
     randomNumber(1,6);
