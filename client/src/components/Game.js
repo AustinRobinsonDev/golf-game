@@ -1,23 +1,19 @@
-import React, { useState, useEffect} from 'react';
-import { Container, Form, Button, FloatingLabel } from 'react-bootstrap';
+import { Container, Form, Button } from 'react-bootstrap';
 import { FaArrowRight } from 'react-icons/fa';
 
 const Game = (props) => {
     const room = 'general';
+    let score = 0;
     function renderUsers (user) {
         if(user.id === props.yourId) {
             return (
-                <p className='d-flex align-items-center pt-2' key={user.id}>You:{user.username}</p>
-                
+                <p className='d-flex align-items-center pt-2' key={user.id}>You:{user.username + " " + score}</p>
             )
         }
         return (
             <p className='d-flex align-items-center pt-2' key={user.id}>{user.username}</p>
         )
-    }
-    // useEffect((user) => {
-    //     renderUsers()
-    // },[props.roundPoints])
+    };
 
     return (
         <Container className="game-wrapper w-100 d-flex flex-column align-items-center p-0" style={{ height: '100vh', maxWidth: '500px'}}>

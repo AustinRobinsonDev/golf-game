@@ -10,6 +10,7 @@ import immer from 'immer';
 import useLocalStorage from './custom-hooks/useLocalStorage';
 
 function App() {
+
   // All app level state
   const [course, setCourse] = useState({
     name: 'Pell City Country Club',
@@ -29,35 +30,51 @@ function App() {
   const [currentScore, setCurrentScore] = useState();
   const [holeCounter, setHoleCounter] = useState(1);
   const [rndm, setRndm] = useState(0);
-  const [currentInGame, setCurrentInGame] = useState()
   const [socket, setSocket] = useState()
   const [id, setId] = useLocalStorage('yourId');
   const socketRef = useRef();
+  let score = 0;
 
   // All app level functions and socket connections 
   function nextHole (e) {
     socket.emit('next hole', roundPoints, username);
     if (holeCounter <= course.length) {
-      if (playerScores[0] === 0) {
-        setCurrentScore(roundPoints)
-        setPlayerScores([parseInt(roundPoints)]);
-      } else{
-        setPlayerScores([...playerScores, parseInt(roundPoints)]);
-        setCurrentScore(parseInt(currentScore) + parseInt(roundPoints));
-      }
+
+
+
       setRoundPoints(''); 
       setHoleCounter(holeCounter + 1);
       randomNumber(1, 6);
-    }
       updateUserScores(username);
-      console.log(allUsers);
+      calculateCurrentScore(username)
+      console.log('current score', currentScore);
+      console.log('player scores', playerScores)
+      console.log('all Users: ', allUsers)
+    }
+    
   }
+
+  const calculateCurrentScore = username => {
+    let usersCopy = [...allUsers];
+    const reducer = (previousValue, currentValue) => previousValue + currentValue;
+    for(let i = 0; i < usersCopy.length; i++){
+      if(usersCopy[i].username === username) {
+        if (holeCounter === 1) {
+          score = parseInt(roundPoints);
+        } else if (holeCounter === 2) {
+          score = usersCopy[i].score[0] + usersCopy[i].score[1];
+        } 
+        score = usersCopy[i].score.reduce(reducer);
+      }
+    }
+    return setCurrentScore(score)
+  } 
 
   function updateUserScores (username) {
     let newUserList = [...allUsers];
     for( let i = 0; i < newUserList.length; i++) {
       if(newUserList[i].username === username) {
-        return newUserList[i].score = [...allUsers, parseInt(roundPoints)];
+        return newUserList[i].score = [...allUsers[i].score, parseInt(roundPoints)];
       }
     }
     setAllUsers(newUserList);
@@ -115,6 +132,7 @@ function App() {
     return () => newSocket.close()
   }, [id]);
 
+  // Game component
   const game = (
         <Game
         roundPoints={roundPoints}
@@ -125,7 +143,6 @@ function App() {
         connectedRooms={connectedRooms}
         currentGame={currentGame}
         course={course}
-        currentInGame={currentInGame}
         onScoreChange={onScoreChange}
         randomNumber={randomNumber}
         currentScore={currentScore}
@@ -134,9 +151,11 @@ function App() {
         random={rndm}
         holeCounter={holeCounter}
         setUsers={setAllUsers}
+        calculateCurrentScore={calculateCurrentScore}
          />
   )
 
+  // Login component
   const login = (
         <Login 
         onSubmitId={setId}
