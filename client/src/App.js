@@ -25,7 +25,6 @@ function App() {
   const [currentGame, setCurrentGame] = useState({ chatName: 'general'});
   const [connectedRooms, setConnectedRooms] = useState('general');
   const [allUsers, setAllUsers] = useState([]);
-  const [playerScores, setPlayerScores] = useState([]);
   const [roundPoints, setRoundPoints] = useState(0);
   const [currentScore, setCurrentScore] = useState();
   const [holeCounter, setHoleCounter] = useState(1);
@@ -39,21 +38,42 @@ function App() {
   function nextHole (e) {
     socket.emit('next hole', roundPoints, username);
     if (holeCounter <= course.length) {
-
-
-
       setRoundPoints(''); 
       setHoleCounter(holeCounter + 1);
       randomNumber(1, 6);
       updateUserScores(username);
       calculateCurrentScore(username)
       console.log('current score', currentScore);
-      console.log('player scores', playerScores)
       console.log('all Users: ', allUsers)
     }
-    
   }
 
+  function displayUserScores(user) {
+    let userScore;
+    const reducer = (previousValue, currentValue) => previousValue += currentValue;
+        if(user.score.length === 0) {
+          return (
+            <div key={user.id}>
+              <p className='w-100 d-flex align-items-center pt-2'>{user.username} <br /> Score: 0 <br /> Hole: {user.score.length + 1}</p>
+            </div>
+          )
+        };
+        if(user.score.length === 1) {
+          return (
+            <div key={user.id}>
+              <p className='w-100 d-flex align-items-center pt-2'>{user.username} <br /> Score:{user.score[0]} <br /> Hole: {user.score.length + 1}</p>
+            </div>
+          )
+        }
+        if(user.score.length >= 2) {
+          return (
+            <div key={user.id}>
+              <p className='w-100 d-flex align-items-center pt-2'>{user.username} <br /> Score:{user.score.reduce(reducer)} <br /> Hole: {user.score.length + 1}</p>
+            </div>
+          )
+        }
+  }
+    
   const calculateCurrentScore = username => {
     let usersCopy = [...allUsers];
     const reducer = (previousValue, currentValue) => previousValue + currentValue;
@@ -85,10 +105,6 @@ function App() {
       return  Math.floor(Math.random() * (max - min) + min);
     }) 
   } 
-
-  function handleScoreChange (e) {
-    setPlayerScores(() => playerScores.push(parseInt(roundPoints)));
-  }
 
   function handleChange (e) {
     setUsername(e.target.value);
@@ -136,17 +152,16 @@ function App() {
   const game = (
         <Game
         roundPoints={roundPoints}
-        handleScoreChange={handleScoreChange}
         yourId={socketRef.current ? socketRef.current.id : ''}
         allUsers={allUsers}
         joinRoom={joinRoom}
         connectedRooms={connectedRooms}
+        displayUserScores={displayUserScores}
         currentGame={currentGame}
         course={course}
         onScoreChange={onScoreChange}
         randomNumber={randomNumber}
         currentScore={currentScore}
-        playerScores={playerScores}
         nextHole={nextHole}
         random={rndm}
         holeCounter={holeCounter}

@@ -32,7 +32,7 @@ const io = socket(server, {
                     i.score.push(parseInt(rp))
                 }
             }) 
-            io.emit(users);
+            io.emit("new user", users);
             console.log(users)
         });
         socket.on('disconnect', () => {
