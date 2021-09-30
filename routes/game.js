@@ -11,7 +11,7 @@ router.post('/', async (req, res) => {
             challenges,
             previousHolesLog
         });
-        const game1 = await newMessage.save();
+        const game1 = await newGame.save();
         res.json(game1)
     } catch (err) {
         console.log(err.message)

@@ -1,4 +1,4 @@
    
 {
-    "mongoURI": "mongodb+srv://austin123:austin123@cluster0.e8nop.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+    "mongoURI": "mongodb+srv://main123:main123@cluster0.gnnjs.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 }

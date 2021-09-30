@@ -47,6 +47,20 @@ function App() {
       console.log('all Users: ', allUsers)
     }
   }
+  // database functions
+  // const addMessage = async fullMessage => {
+  //   const config = {
+  //       headers: {
+  //           'Content-Type': 'application/json'
+  //       }
+  //   }
+  //   try {
+  //       const res = await axios.post('/api/messages', fullMessage, config);
+  //       dispatch({ type: ADD_MESSAGE, payload: res.data});
+  //   } catch (err) {
+  //       console.log(err)
+  //   }
+  // }
 
   function displayUserScores(user) {
     const reducer = (previousValue, currentValue) => previousValue += currentValue;
