@@ -49,7 +49,6 @@ function App() {
   }
 
   function displayUserScores(user) {
-    let userScore;
     const reducer = (previousValue, currentValue) => previousValue += currentValue;
         if(user.score.length === 0) {
           return (

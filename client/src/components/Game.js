@@ -3,47 +3,7 @@ import { Container, Form, Button } from 'react-bootstrap';
 import { FaArrowRight } from 'react-icons/fa';
 
 const Game = (props) => {
-    const [calculatedScore, setCalculatedScore] = useState(0);
     const room = 'general';
-    let userScore;
-    let usersMain = props.allUsers;
-    useEffect(() => {
-        //renderUsers(props.allUsers)
-    }, [props.allUsers])
-    // const calcScores = (username) => {
-    //     const reducer = (previousValue, currentValue) => previousValue + currentValue;
-        
-    //     usersMain.forEach(user => {
-    //         if(props.holeCounter === 1){
-    //             user.score = 0;
-    //         } else if (props.holeCounter === 2) {
-    //             score = user.score[0];
-    //             user.score = score;
-    //         } else {
-    //             score = user.score.reduce(reducer);
-    //             user.score = score;
-    //         }
-    //     });
-    //     return usersMain;
-    // }
-    // function renderUsers (user) {
-    //     if(user.id === props.yourId) {
-    //         return (
-    //                         <div key={user.id}>
-    //                             <p className='w-100 d-flex align-items-center pt-2'  >You:{user.username} Score:{userScore}</p>
-    //                         </div>
-    //                     )
-    //                 }
-
-            
-        
-    //     return (
-    //         <div key={user.id}>
-    //                <p className='w-100 d-flex align-items-center pt-2'  >You:{user.username} Score:{user.score}</p>
-    //                 <h5>{user.score}</h5>
-    //             </div>
-    //     )
-    // };
 
     return (
         <Container className="game-wrapper w-100 d-flex flex-column align-items-center p-0" style={{ height: '100vh', maxWidth: '500px'}}>
