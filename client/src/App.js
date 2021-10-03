@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
+import axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './components/Login';
 import Game from './components/Game';
@@ -20,6 +21,11 @@ function App() {
     holeLength: [350, 515, 135, 340, 165, 492, 426, 376, 358 ],
     rules: ['Every player must tee-off from a beer can', 'Only drivers and putters on this hole, you may re-tee after first shot',   'Each player must Billy Madison their tee shot', 'Every player is free to distract the person teeing off', 'Every player use the womens tee-box and throw the ball as far as possible for stroke #1', 'Everyone uses their driver to putt on this hole']
   });
+  const [gameState, setGameState] = useState({
+    name: '',
+    players: [],
+    currentRandomNumber: ''
+  })
   const [username, setUsername] = useState('');
   const [connected, setConnected] = useState(false);
   const [currentGame, setCurrentGame] = useState({ chatName: 'general'});
@@ -34,7 +40,21 @@ function App() {
   const socketRef = useRef();
   let score = 0;
 
-  // All app level functions and socket connections 
+  //database functions
+  const addGame = async gameState => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    try {
+        const res = await axios.post('/api/game', gameState, config);
+    } catch (err) {
+        console.log(err)
+    }
+  }
+
+  // All App/component level functions and socket connections 
   function nextHole (e) {
     socket.emit('next hole', roundPoints, username);
     if (holeCounter <= course.length) {
@@ -43,51 +63,23 @@ function App() {
       randomNumber(1, 6);
       updateUserScores(username);
       calculateCurrentScore(username)
-      console.log('current score', currentScore);
-      console.log('all Users: ', allUsers)
+      updateGameState();
+      addGame(gameState);
+      console.log(gameState);
     }
   }
-  // database functions
-  // const addMessage = async fullMessage => {
-  //   const config = {
-  //       headers: {
-  //           'Content-Type': 'application/json'
-  //       }
-  //   }
-  //   try {
-  //       const res = await axios.post('/api/messages', fullMessage, config);
-  //       dispatch({ type: ADD_MESSAGE, payload: res.data});
-  //   } catch (err) {
-  //       console.log(err)
-  //   }
-  // }
 
-  function displayUserScores(user) {
-    const reducer = (previousValue, currentValue) => previousValue += currentValue;
-        if(user.score.length === 0) {
-          return (
-            <div key={user.id}>
-              <p className='w-100 d-flex align-items-center pt-2'>{user.username} <br /> Score: 0 <br /> Hole: {user.score.length + 1}</p>
-            </div>
-          )
-        };
-        if(user.score.length === 1) {
-          return (
-            <div key={user.id}>
-              <p className='w-100 d-flex align-items-center pt-2'>{user.username} <br /> Score:{user.score[0]} <br /> Hole: {user.score.length + 1}</p>
-            </div>
-          )
-        }
-        if(user.score.length >= 2) {
-          return (
-            <div key={user.id}>
-              <p className='w-100 d-flex align-items-center pt-2'>{user.username} <br /> Score:{user.score.reduce(reducer)} <br /> Hole: {user.score.length + 1}</p>
-            </div>
-          )
-        }
+  function updateGameState () {
+    let gameName = 'testName';
+    let tempGameState = {
+      name: gameName,
+      players: allUsers,
+      currentRandomNumber: rndm
+    }
+    setGameState(tempGameState)
   }
     
-  const calculateCurrentScore = username => {
+  function calculateCurrentScore (username) {
     let usersCopy = [...allUsers];
     const reducer = (previousValue, currentValue) => previousValue + currentValue;
     for(let i = 0; i < usersCopy.length; i++){
@@ -161,7 +153,33 @@ function App() {
     return () => newSocket.close()
   }, [id]);
 
-  // Game component
+  // Game components || Conditional Renders
+
+  function displayUserScores(user) {
+    const reducer = (previousValue, currentValue) => previousValue += currentValue;
+    if(user.score.length === 0) {
+      return (
+        <div key={user.id}>
+          <p className='w-100 d-flex align-items-center pt-2'>{user.username} <br /> Score: 0 <br /> Hole: {user.score.length + 1}</p>
+        </div>
+      )
+    };
+    if(user.score.length === 1) {
+      return (
+        <div key={user.id}>
+          <p className='w-100 d-flex align-items-center pt-2'>{user.username} <br /> Score:{user.score[0]} <br /> Hole: {user.score.length + 1}</p>
+        </div>
+      )
+    }
+    if(user.score.length >= 2) {
+      return (
+        <div key={user.id}>
+          <p className='w-100 d-flex align-items-center pt-2'>{user.username} <br /> Score:{user.score.reduce(reducer)} <br /> Hole: {user.score.length + 1}</p>
+        </div>
+      )
+    }
+  }
+
   const game = (
         <Game
         roundPoints={roundPoints}
@@ -180,7 +198,7 @@ function App() {
         holeCounter={holeCounter}
         setUsers={setAllUsers}
         calculateCurrentScore={calculateCurrentScore}
-         />
+          />
   )
 
   // Login component

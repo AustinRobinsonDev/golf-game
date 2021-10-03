@@ -9,8 +9,8 @@ const GameSchema = mongoose.Schema({
         type: Array,
         required: true
     },
-    previousHolesLog: {
-        type: Array
+    currentRandomNumber: {
+        type: Number
     },
     date: {
         type: Date,
