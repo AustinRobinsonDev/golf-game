@@ -1,17 +1,17 @@
 # ToDo
-###Add Socket Room functionality 
-###Add Heroku
-###Remove inline styling change to component level for what isnt inside css file
-###Update how to play
-###Update create room screen
-###Add page transitions 
-###Add mongo DB for better score keeping on refresh or add to local storage
-###fix state for database update on 'next hole'
-###create function to update database game 
-###if connection lost socket disconnect load from database last position 
-###possibly store a copy of all game state in database and update all at the same time
-###pull gamestate from database and load data in the game screen from that 
-###create component "player icon" to load instead of a `<p></p> ` with stats
+### Add Socket Room functionality 
+### Add Heroku
+### Remove inline styling change to component level for what isnt inside css file
+### Update how to play
+### Update create room screen
+### Add page transitions 
+### Add mongo DB for better score keeping on refresh or add to local storage
+### fix state for database update on 'next hole'
+### create function to update database game 
+### if connection lost socket disconnect load from database last position 
+### possibly store a copy of all game state in database and update all at the same time
+### pull gamestate from database and load data in the game screen from that 
+### create component "player icon" to load instead of a `<p></p> ` with stats
 
 ## how to use
 inside root folder "npm run devStart" 
