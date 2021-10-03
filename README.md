@@ -9,7 +9,6 @@
 ##### Fix state for database update on 'next hole'
 ##### Create function to update database game 
 ##### If connection lost socket disconnect load from database last position 
-##### Possibly store a copy of all game state in database and update all at the same time
 ##### Pull gamestate from database and load data in the game screen from that 
 ##### Create component "player icon" to load instead of a `<p></p> ` with stats
 
